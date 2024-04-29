@@ -1,20 +1,22 @@
-import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import React from 'react';
+import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 
-function App() {
-  const [hello, setHello] = useState('')
+import ChallengeCategory from './components/challenge/ChallengeCategory.js';
+import HelloTest from './pages/HelloTest.js'
 
-  useEffect(() => {
-    axios.get("/api/hello")
-        .then(response => setHello(response.data))
-        .catch(error => console.log(error))
-  }, []);
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <ChallengeCategory />
+    },
+    {
+        path: "/test",
+        element: <HelloTest />
+    }
+]);
 
-  return (
-      <div>
-        백엔드에서 가져온 데이터입니다 : {hello}
-      </div>
-  );
+export default function App(){
+    return (
+        <RouterProvider router={router} />
+    );
 }
-
-export default App;
