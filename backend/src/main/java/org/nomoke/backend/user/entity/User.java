@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.nomoke.backend.challenge.entity.Challenge;
+import org.nomoke.backend.record.entity.RecordEntity;
 
 import java.util.HashSet;
 import java.util.Set;

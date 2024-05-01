@@ -3,16 +3,14 @@ import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
 
 import ChallengeCategory from './components/challenge/ChallengeCategory.js';
 import Main from "./pages/Main";
+import Analysis from "./pages/Analysis";
+import Record from "./pages/Record";
 
 const router = createBrowserRouter([
-    {
-        path: "/challenge",
-        element: <ChallengeCategory />
-    },
-    {
-        path: "/",
-        element: <Main />
-    }
+    { path: "/", element: <Main /> },
+    { path: "/record", element: <Record /> },
+    { path: "/analysis", element: <Analysis /> },
+    { path: "/challenge", element: <ChallengeCategory /> },
 ]);
 
 export default function App(){
