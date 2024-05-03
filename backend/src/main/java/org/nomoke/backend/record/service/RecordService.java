@@ -22,7 +22,8 @@ public class RecordService {
 
     public void createRecord(RecordDto recordDto) {
         RecordEntity recordEntity = new RecordEntity();
-        recordEntity.setAmount(recordDto.getAmount());
+        recordEntity.setRecordAmount(recordDto.getRecordAmount());
+        recordEntity.setRecordDate(recordDto.getRecordDate());
 
         recordRepository.save(recordEntity);
     }

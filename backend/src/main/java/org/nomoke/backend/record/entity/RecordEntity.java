@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.nomoke.backend.user.entity.User;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -17,7 +18,10 @@ public class RecordEntity {
     private Long id;
 
     @Column
-    private Long amount;
+    private Long recordAmount;
+
+    @Temporal(TemporalType.DATE)
+    private Date recordDate;
 
     @Column
     @CreationTimestamp

@@ -5,12 +5,36 @@ import moment from "moment/moment";
 import Calendar from "react-calendar";
 
 function RecordPage() {
-    const [value, onChange] = useState(new Date());
+    const [date, setDate] = useState(new Date());
     const [time, setTime] = useState();
     const [selectedDateTime, setSelectedDateTime] = useState([]);
     const [selectedTime, setSelectedTime] = useState();
     const [amount, setAmount] = useState("");
+    const [selectedDayAmount, setSelectedDayAmount] = useState(null);
     // 저장 버튼 클릭 시 호출되는 함수
+
+    const fetchSmokingRecord = (date) => {
+        // Assuming your API endpoint is /api/record/:date
+        fetch(`/api/record/${moment(date).format("YYYY-MM-DD")}`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                throw new Error('Failed to fetch smoking record');
+            })
+            .then(data => {
+                setSelectedDayAmount(data.amount);
+            })
+            .catch(error => {
+                console.error("Failed to fetch smoking record:", error);
+                setSelectedDayAmount(null);
+            });
+    };
+
+    // Fetch smoking record when date changes
+    useEffect(() => {
+        fetchSmokingRecord(date);
+    }, [date]);
 
     const handleSave = () => {
         // 입력값이 있을 경우에만 저장 요청
@@ -20,7 +44,7 @@ function RecordPage() {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ amount: amount }) // 입력값을 JSON 형태로 변환하여 전송
+                body: JSON.stringify({ recordAmount: amount, recordDate: date }) // 입력값을 JSON 형태로 변환하여 전송
             })
                 .then(response => {
                     if (response.ok) {
@@ -37,6 +61,7 @@ function RecordPage() {
                     console.error("저장 요청 중 에러 발생:", error);
                 });
         } else {
+            alert("입력값이 없습니다.")
             console.log("입력값이 없습니다.");
         }
     };
@@ -46,6 +71,12 @@ function RecordPage() {
                 <div className="p-5 m-4 rounded-3" style={{background: "#5e5e5e", height: "400px"}}>
                     <div className="container-fluid py-5">
                         <h2 className="display-5 fw-bold text-white">오늘 나의 흡연량은?</h2>
+                        <label className="text-white" htmlFor="date">날짜를 선택하세요:
+                            <input type="date"
+                                   id="date"
+                                   value={moment(date).format("YYYY-MM-DD")} // Bind value to selected date
+                                   onChange={(e) => setDate(new Date(e.target.value))}/>
+                        </label>
                         <input
                             className="form-control form-control-lg my-4"
                             type="text"
@@ -71,12 +102,12 @@ function RecordPage() {
                         <br/>
                         <div className="row">
                             <Calendar className="col-6"
-                                value={value}
-                                formatDay={(locale, date) => moment(date).format("DD")}>
+                                      value={date}
+                                      onChange={setDate}
+                                      formatDay={(locale, date) => moment(date).format("DD")}>
                             </Calendar>
                             <div className="col-6">
-                                <h3>오늘 흡연량</h3>
-                                <h4>날짜</h4>
+                                <h3>흡연량: {selectedDayAmount !== null ? selectedDayAmount : "데이터 없음"}</h3>
                             </div>
                         </div>
                     </div>
