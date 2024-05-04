@@ -1,15 +1,14 @@
 package org.nomoke.backend.user.entity;
 
-import jakarta.persistence.*;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
-import org.nomoke.backend.challenge.entity.Challenge;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@Table(name = "user")
 @Getter
 @Setter
 public class User {
@@ -18,13 +17,11 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 10, nullable = false)
+    private String username;
+
     private String name;
 
-    @Column(name = "login_id", length = 10, nullable = false)
-    private String loginId;
+    private String email;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Challenge> challenge = new HashSet<>();
-
+    private String role;
 }

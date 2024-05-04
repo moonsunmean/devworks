@@ -2,6 +2,7 @@ package org.nomoke.backend.challenge.service;
 
 import lombok.RequiredArgsConstructor;
 import org.nomoke.backend.challenge.constant.ChallengeStatus;
+import org.nomoke.backend.challenge.constant.ChallengeType;
 import org.nomoke.backend.challenge.dto.ChallengeDto;
 import org.nomoke.backend.challenge.entity.Challenge;
 import org.nomoke.backend.challenge.repository.ChallengeRepository;
@@ -57,14 +58,14 @@ public class ChallengeService {
 
     //종료된 챌린지 조회
     @Transactional(readOnly = true)
-    public List<Challenge> getFinishedChallenges(){
-        return challengeRepository.findByChallengeStatus(ChallengeStatus.FINISHED);
+    public List<Challenge> getFinishedGroupChallenges(){
+        return challengeRepository.findByChallengeStatusAndType(ChallengeStatus.FINISHED, ChallengeType.GROUP);
     }
 
     //진행중인 챌린지 조회
     @Transactional(readOnly = true)
-    public List<Challenge> getOngoingChallenges(){
-        return challengeRepository.findByChallengeStatus(ChallengeStatus.ONGOING);
+    public List<Challenge> getOngoingGroupChallenges(){
+        return challengeRepository.findByChallengeStatusAndType(ChallengeStatus.ONGOING, ChallengeType.GROUP);
     }
 
     //수정
