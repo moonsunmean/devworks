@@ -3,51 +3,54 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import moment from "moment/moment";
 import Calendar from "react-calendar";
+import 'react-calendar/dist/Calendar.css';
+import axios from "axios";
 
 function RecordPage() {
     const [date, setDate] = useState(new Date());
-    const [time, setTime] = useState();
-    const [selectedDateTime, setSelectedDateTime] = useState([]);
-    const [selectedTime, setSelectedTime] = useState();
     const [amount, setAmount] = useState("");
-    const [selectedDayAmount, setSelectedDayAmount] = useState(null);
+    const [records, setRecords] = useState([]);
     // 저장 버튼 클릭 시 호출되는 함수
 
-    const fetchSmokingRecord = (date) => {
-        // Assuming your API endpoint is /api/record/:date
-        fetch(`/api/record/${moment(date).format("YYYY-MM-DD")}`)
+    useEffect(() => {
+        // 페이지가 로드될 때 한 번만 실행되도록 설정
+        axios.get("/api/record")
             .then(response => {
-                if (response.ok) {
-                    return response.json();
-                }
-                throw new Error('Failed to fetch smoking record');
-            })
-            .then(data => {
-                setSelectedDayAmount(data.amount);
+                // 성공적으로 데이터를 받아오면 상태 업데이트
+                setRecords(response.data);
             })
             .catch(error => {
-                console.error("Failed to fetch smoking record:", error);
-                setSelectedDayAmount(null);
+                console.error("데이터를 가져오는 중 에러 발생:", error);
             });
+    }, []);
+    const tileContent = ({ date, view }) => {
+        if (view === 'month') {
+            const recordForDate = records.find(record => moment(record.recordDate).isSame(date, 'day'));
+            if (recordForDate) {
+                let redDotCount = Math.ceil(recordForDate.recordAmount / 20); // 흡연량에 따라 빨간 점 개수 결정
+                if (redDotCount > 3) redDotCount = 3; // 최대 3개의 빨간 점만 허용
+                const redDots = Array.from({ length: redDotCount }, (_, index) => (
+                    <div key={index} style={{ backgroundColor: 'red', width: '10px', height: '10px', borderRadius: '50%', display: 'inline-block', marginRight: '2px' }}></div>
+                ));
+                return <div>{redDots}</div>;
+            }
+        }
     };
 
-    // Fetch smoking record when date changes
-    useEffect(() => {
-        fetchSmokingRecord(date);
-    }, [date]);
 
     const handleSave = () => {
         // 입력값이 있을 경우에만 저장 요청
         if (amount) {
-            fetch("/api/record", {
-                method: "POST",
+            axios.post("/api/record", {
+                recordAmount: amount,
+                recordDate: date
+            }, {
                 headers: {
                     "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ recordAmount: amount, recordDate: date }) // 입력값을 JSON 형태로 변환하여 전송
+                }
             })
                 .then(response => {
-                    if (response.ok) {
+                    if (response.status === 200) {
                         console.log(amount);
                         // 저장 후 어떤 작업을 수행할 수 있습니다.
                         setAmount("");
@@ -59,12 +62,14 @@ function RecordPage() {
                 })
                 .catch(error => {
                     console.error("저장 요청 중 에러 발생:", error);
+                    alert("저장 요청 중 에러 발생");
                 });
         } else {
-            alert("입력값이 없습니다.")
+            alert("입력값이 없습니다.");
             console.log("입력값이 없습니다.");
         }
     };
+
     return (
         <>
             <div className="container py-4" style={{width: "1100px"}}>
@@ -80,7 +85,7 @@ function RecordPage() {
                         <input
                             className="form-control form-control-lg my-4"
                             type="text"
-                            placeholder="숫자만 입력해주세요"
+                            placeholder="숫자만 입력해주세요 (개비)"
                             aria-label=".form-control-lg example"
                             value={amount} // 입력값과 상태를 바인딩
                             onChange={(e) => setAmount(e.target.value)} // 입력값이 변경될 때마다 상태 업데이트
@@ -101,13 +106,33 @@ function RecordPage() {
                         <h2 className="display-5 fw-bold text-white">이번달 흡연량</h2>
                         <br/>
                         <div className="row">
-                            <Calendar className="col-6"
-                                      value={date}
-                                      onChange={setDate}
-                                      formatDay={(locale, date) => moment(date).format("DD")}>
-                            </Calendar>
+                            <Calendar
+                                className="col-6"
+                                value={date}
+                                onChange={setDate}
+                                formatDay={(locale, date) => moment(date).format("DD")}
+                                tileContent={tileContent} // 달력에 표시할 데이터 추가
+                            />
                             <div className="col-6">
-                                <h3>흡연량: {selectedDayAmount !== null ? selectedDayAmount : "데이터 없음"}</h3>
+                                <div>
+                                    <h2>Record List</h2>
+                                    <table>
+                                        <thead>
+                                        <tr>
+                                            <th>Amount</th>
+                                            <th>Date</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {records.map(record => (
+                                            <tr key={record.id}>
+                                                <td>{record.recordAmount}</td>
+                                                <td>{record.recordDate}</td>
+                                            </tr>
+                                        ))}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>

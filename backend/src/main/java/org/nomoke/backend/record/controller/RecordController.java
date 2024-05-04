@@ -18,12 +18,16 @@ import java.util.List;
 public class RecordController {
 
     private final RecordService recordService;
-    private final RecordRepository recordRepository;
 
     @Autowired
-    public RecordController(RecordService recordService, RecordRepository recordRepository) {
+    public RecordController(RecordService recordService) {
         this.recordService = recordService;
-        this.recordRepository = recordRepository;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<RecordEntity>> getAllRecords() {
+        List<RecordEntity> recordEntities = recordService.selectRecords();
+        return ResponseEntity.ok(recordEntities);
     }
 
 

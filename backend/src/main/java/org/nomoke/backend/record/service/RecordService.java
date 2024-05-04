@@ -16,7 +16,7 @@ import java.util.List;
 public class RecordService {
     private final RecordRepository recordRepository;
 
-    public List<RecordEntity> selectRecord() {
+    public List<RecordEntity> selectRecords() {
         return recordRepository.findAll();
     }
 
