@@ -15,7 +15,8 @@ button{
 .analysis-page {
     display: flex;
     margin:100px 0 50px 0;
-    justify-content: center;
+justify-content: center;
+    flex-direction: column;
     color : white;
 
 }
@@ -58,43 +59,53 @@ button{
 
 /* 캘린더 */
 .react-calendar {
+    margin-top : 5px;
     background: black;
     border-radius: 10px;
     border: 1px solid var(--festie-gray-400, #c8c8c8); /* 전체 틀: border, border-radius 조정*/
     color : white;
+    width:100%;
+    height:auto;
   }
 .react-calendar__label {
    color: white;
-
+   font-size:15px;
 }
   .react-calendar__navigation__label > span {
     /* 달력 상단 년/월 글씨 커스텀*/
     color: white;
     font-family: SUIT Variable;
-    font-size: 13px;
+    font-size: 18px;
     font-weight: bold;
     line-height: 140%;
 
   }
   .react-calendar__navigation__arrow{
        color: white;
+       font-size: 18px;
   }
 
    .react-calendar__month-view{
         border-radius: 10px;
+        font-size:15px;
         color: white;
    }
    .react-calendar__month-view__days__day{
         color: white;
+        font-size:15px;
    }
   .react-calendar__month-view__days__day--weekend {
     /* 주말 글씨 빨간색 없애기*/
     color: white;
   }
+    .react-calendar__tile {
+      border-radius: 35%;
+      padding: 30px 10px 30px 10px;
+    }
   .react-calendar__tile:enabled:hover,
   .react-calendar__tile:enabled:focus {
     /*hover 했을 때 색상 변경*/
-    border-radius: 50px;
+    border-radius: 35%;
     color :white;
     background: gray;
   }
@@ -102,7 +113,7 @@ button{
 
   .react-calendar__tile--now {
     background: white;
-    border-radius: 50px;
+    border-radius: 35%;
     font-weight: bold;
     color: black;
   }
@@ -110,7 +121,31 @@ button{
   .react-calendar__tile--active {
     background: white;
     color: black;
-    border-radius: 50px;
+    border-radius: 35%;
+  }
+
+  #center_contents {
+    display: flex;
+    margin: 0 auto; /* 페이지 중앙에 배치 */
+    padding: 20px; /* 약간의 패딩을 줍니다 */
+    max-width: 100%; /* 최대 너비를 설정할 수 있습니다 */
+  }
+  #center_title{
+    background: red;
+    border-radius: 4px;
+    font-size : 30px;
+    padding : 5px;
+    font-weight: bold;
+
+  }
+
+  #bottom_contents {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto; /* 페이지 중앙에 배치 */
+    padding: 20px; /* 약간의 패딩을 줍니다 */
+    max-width: 100%; /* 최대 너비를 설정할 수 있습니다 */
   }
 #person-price{
     margin-bottom:15px;

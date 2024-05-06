@@ -21,11 +21,14 @@ const Analysis = () => {
     <div className="analysis-page">
         <div id="top_contents">
             <div className = "userinfo-area">
-
-                내 평균<br />
-                <h3>하루 00값</h3>
-                <img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/siga.png?alt=media&token=39d3ec72-e13b-49b4-a043-822363c4e0c5" alt="담배 이미지"/>
-
+                <div id = "userinfo">
+                    내 평균<br /> <h1>하루 00값</h1>
+                    <img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/siga.png?alt=media&token=39d3ec72-e13b-49b4-a043-822363c4e0c5" alt="담배 이미지"/>
+                </div>
+                <div id = "otherinfo">
+                   <div id = "avginfo"> 평균 흡연자<br /><h2> 하루 00개비</h2></div>
+                   <div id = "nomokeinfo"> Nomoke 사용자<br /><h2> 하루 00개비</h2></div>
+                </div>
             </div>
 
             <div className="calender-area">
@@ -38,7 +41,7 @@ const Analysis = () => {
             </div>
         </div>
         <div id="center_contents">
-          질병통계 데이터
+          <div id = "center_title">발병확률＋</div>
         </div>
         <div id="bottom_contents">
           주간분석 데이터
