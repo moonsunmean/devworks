@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import '../../styles/challenge/css/ChallengeCategory.css';
 
 function ChallengeCategory() {
     const [isCategoryBoxOpen, setIsCategoryBoxOpen] = useState(true); //기본세팅은 열린상태
