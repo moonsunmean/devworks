@@ -20,5 +20,5 @@ public interface RecordRepository extends JpaRepository<RecordEntity, Long> {
     @Query("SELECT r FROM RecordEntity r WHERE r.userId = :userId ORDER BY r.createdAt DESC")
     Optional<RecordEntity> findTopByUserIdOrderByCreatedAtDesc(Long userId);
 
-    List<RecordEntity> findByUserIdAndCreatedAtBetween(Long userId,LocalDate startDateTime, LocalDate endDateTime);
+    List<RecordEntity> findByUserIdAndRecordDateBetweenOrderByRecordDateAsc(Long userId,LocalDate startDateTime, LocalDate endDateTime);
 }

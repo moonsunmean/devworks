@@ -26,7 +26,7 @@ public class AnalysisController {
         log.info("id값1: {}",id);
         List<RecordEntity> recordEntity = analysisService.getRecordsForUserInDateRange(id);
         AnalysisDto analysisDto = analysisService.AnalysisWeek(recordEntity);
-
+        analysisDto.setRecordEntity(recordEntity);
         return new ResponseEntity<>(analysisDto, HttpStatus.OK);
     }
 }

@@ -2,6 +2,7 @@ package org.nomoke.backend.analysis.service;
 import java.time.DayOfWeek;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.nomoke.backend.analysis.dto.AnalysisDto;
 import org.nomoke.backend.record.dto.RecordDto;
 import org.nomoke.backend.record.entity.RecordEntity;
@@ -10,12 +11,14 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class AnalysisService {
     private final RecordRepository recordRepository;
 
@@ -26,7 +29,11 @@ public class AnalysisService {
         LocalDate now = LocalDate.now(); // 현재 날짜
         LocalDate startOfWeek = now.with(DayOfWeek.MONDAY); // 이번 주의 월요일
         LocalDate endOfWeek = now.with(DayOfWeek.SUNDAY); // 이번 주의 일요일
-        return recordRepository.findByUserIdAndCreatedAtBetween(userId, startOfWeek, endOfWeek);
+        LocalDateTime startOfWeekDateTime = startOfWeek.atTime(LocalTime.MIDNIGHT); // 이번 주 월요일 자정
+        LocalDateTime endOfWeekDateTime = endOfWeek.atTime(23, 59, 59); // 이번 주 일요일 23시 59분 59초
+        log.info("start: {}",startOfWeek);
+        log.info("end: {}",endOfWeek);
+        return recordRepository.findByUserIdAndRecordDateBetweenOrderByRecordDateAsc(userId, startOfWeek, endOfWeek);
     }
 
     public AnalysisDto AnalysisWeek(List<RecordEntity> records){

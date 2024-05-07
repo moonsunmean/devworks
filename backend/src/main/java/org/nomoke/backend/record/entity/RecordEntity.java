@@ -24,7 +24,7 @@ public class RecordEntity {
     @Column(name="smokeAmount")
     private Long recordAmount;
 
-    @Column(name="date")
+    @Column(name="recordDate")
     @Temporal(TemporalType.DATE)
     private Date recordDate;
 
