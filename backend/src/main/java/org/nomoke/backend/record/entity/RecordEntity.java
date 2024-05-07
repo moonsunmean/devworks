@@ -12,14 +12,19 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Table(name="Record")
 public class RecordEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column
+    private Long userId;
+
+    @Column(name="smokeAmount")
     private Long recordAmount;
 
+    @Column(name="date")
     @Temporal(TemporalType.DATE)
     private Date recordDate;
 

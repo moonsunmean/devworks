@@ -25,7 +25,7 @@ const Analysis = () => {
              try {
                console.log(id);
                const response = await axios.get(`/analysis/${id}`);
-               console.log(response);
+               console.log("분석데이터: ",response.data);
                const weekData = response.data;
 
                setWeekData(weekData);

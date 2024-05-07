@@ -3,7 +3,7 @@ package org.nomoke.backend.user.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.nomoke.backend.challenge.entity.Challenge;
+//import org.nomoke.backend.challenge.entity.Challenge;
 import org.nomoke.backend.record.entity.RecordEntity;
 
 import java.util.HashSet;
@@ -25,7 +25,7 @@ public class User {
     @Column(name = "login_id", length = 10, nullable = false)
     private String loginId;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Challenge> challenge = new HashSet<>();
+//    @ManyToMany(mappedBy = "users")
+//    private Set<Challenge> challenge = new HashSet<>();
 
 }
