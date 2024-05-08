@@ -9,7 +9,7 @@ function Header() {
                     <li className="nav-item"><a className="nav-link text-white" href="/record">기록</a></li>
                     <li className="nav-item"><a className="nav-link text-white" href="/analysis">통계</a></li>
                     <li className="nav-item"><a className="nav-link text-white" href="/challenge">챌린지</a></li>
-                    <li className="nav-item"><a className="nav-link text-white" href="/help">지원</a></li>
+                    <li className="nav-item"><a className="nav-link text-white" href="/support">지원</a></li>
                 </ul>
                 <ul className="navbar-nav">
                     <li className="nav-item"><a className="nav-link text-white" href="/join">JOIN</a></li>

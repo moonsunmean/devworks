@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import Footer from "../../components/Footer";
+import Header from "../../components/Header";
 import moment from "moment/moment";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
@@ -36,7 +36,6 @@ function RecordPage() {
             }
         }
     };
-
 
     const handleSave = () => {
         // 입력값이 있을 경우에만 저장 요청

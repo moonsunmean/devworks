@@ -2,11 +2,8 @@ package org.nomoke.backend.challenge.controller;
 
 
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
-import org.nomoke.backend.challenge.dto.ChallengeDto;
 import org.nomoke.backend.challenge.entity.Challenge;
 import org.nomoke.backend.challenge.service.ChallengeService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
