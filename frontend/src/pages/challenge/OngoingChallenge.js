@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import axios from '../../services/AxiosConfig.js';
 import ChallengeCategory from '../../components/challenge/ChallengeCategory.js';
 import '../../styles/challenge/css/OngoingChallenge.css';
 import ChallengeCard from '../../components/challenge/ChallengeCard.js';

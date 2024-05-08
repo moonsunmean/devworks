@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
+import axios from '../services/AxiosConfig.js';
 
 function HelloTest(){
     const [hello, setHello] = useState('')

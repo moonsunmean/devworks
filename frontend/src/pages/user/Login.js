@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // 페이지 로드시 토큰 확인하여 로그인 상태 업데이트
-    checkToken();
-  }, [checkToken]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -23,12 +17,14 @@ function Login() {
           password: password
         });
 
-        const token = response.data.token;
+        console.log('Response:', response);
 
-        // 토큰을 쿠키에 저장
-        document.cookie = `token=${token}; path=/`;
+        const token = response.headers.authorization.split(' ')[1];
 
-        setIsLoggedIn(true);
+        console.log('Received token:', token);
+
+        // 서버에서 받은 토큰을 로컬스토리지에 저장
+        localStorage.setItem('token', token);
 
         // 로그인 성공 시 메인 화면으로 이동
         navigate('/');
@@ -44,29 +40,6 @@ function Login() {
     }
   };
 
-  const handleLogout = () => {
-    // 토큰 삭제
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-
-    setIsLoggedIn(false);
-
-    // 로그아웃 후 로그인 페이지로 이동
-    navigate('/login');
-  };
-
-  const checkToken = () => {
-    // 쿠키에서 토큰 확인하여 로그인 상태 업데이트
-    const token = getCookie('token');
-    if (token) {
-      setIsLoggedIn(true);
-    }
-  };
-
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  };
 
   return (
     <div>
@@ -92,7 +65,7 @@ function Login() {
           />
         </div>
         <button type="submit">로그인</button>
-        {isLoggedIn && <button onClick={handleLogout}>로그아웃</button>}
+        <Link to="/join">회원가입</Link>
       </form>
     </div>
   );

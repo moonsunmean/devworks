@@ -48,7 +48,8 @@ public class JWTFilter extends OncePerRequestFilter {
         //토큰 소멸 시간 검증
         if (jwtUtil.isExpired(token)) {
 
-            System.out.println("token expired");
+            System.out.println("토큰이 만료되었습니다.");
+            System.out.println("Expired Token: " + token);
             filterChain.doFilter(request, response);
 
             //조건이 해당되면 메소드 종료 (필수)
