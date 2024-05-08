@@ -4,16 +4,21 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import HelloTest from './pages/HelloTest.js'
 import OngoingChallenge from './pages/challenge/OngoingChallenge.js';
-import Login from './pages/login/Login.js';
+import Join from './pages/user/Join.js';
+import Login from './pages/user/Login.js';
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Login />
+        element: <HelloTest />
     },
     {
-        path: "/test",
-        element: <HelloTest />
+        path: "/join",
+        element: <Join />
+    },
+    {
+        path: "/login",
+        element: <Login />
     },
     {
         path: "/ongoing",
