@@ -23,6 +23,7 @@ public class ChallengeController {
 //        Challenge createdChallenge = challengeService.createChallenge(challengeDto);
 //        return ResponseEntity.status(HttpStatus.CREATED).body(createdChallenge);
 //    }
+//  user만들고 나면 userId로 조회하기!!!!!!!!!!!!!!!!!!!! 짱급함
 
     //전체조회
     @GetMapping
@@ -39,18 +40,18 @@ public class ChallengeController {
         return ResponseEntity.ok(challenge);
     }
 
-    //종료된 챌린지 조회
+    //종료된 챌린지 조회(그룹)
     @GetMapping("/finished")
-    public ResponseEntity<List<Challenge>> getFinishedChallenges(){
-        List<Challenge> finishedChallenges = challengeService.getFinishedChallenges();
-        return ResponseEntity.ok(finishedChallenges);
+    public ResponseEntity<List<Challenge>> getFinishedGroupChallenges(){
+        List<Challenge> finishedGroupChallenges = challengeService.getFinishedGroupChallenges();
+        return ResponseEntity.ok(finishedGroupChallenges);
     }
 
-    //진행중 챌린지 조회
+    //진행중 챌린지 조회(그룹)
     @GetMapping("/ongoing")
-    public ResponseEntity<List<Challenge>> getOngoingChallenges(){
-        List<Challenge> ongoingChallenges = challengeService.getOngoingChallenges();
-        return ResponseEntity.ok(ongoingChallenges);
+    public ResponseEntity<List<Challenge>> getOngoingGroupChallenges(){
+        List<Challenge> ongoingGroupChallenges = challengeService.getOngoingGroupChallenges();
+        return ResponseEntity.ok(ongoingGroupChallenges);
     }
 
 //    //수정

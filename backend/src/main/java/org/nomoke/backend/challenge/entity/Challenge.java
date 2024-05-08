@@ -7,11 +7,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.nomoke.backend.challenge.constant.ChallengeStatus;
 import org.nomoke.backend.challenge.constant.ChallengeType;
 import org.nomoke.backend.challenge.constant.RecordType;
-import org.nomoke.backend.user.entity.User;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Table(name = "challenge")
@@ -54,11 +51,11 @@ public class Challenge {
     @Column(name = "main_image_url", length = 1000)
     private String mainImageUrl;
 
-    @ManyToMany
-    @JoinTable(
-            name = "challenge_user",
-            joinColumns = @JoinColumn(name = "challenge_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
-    )
-    private Set<User> users = new HashSet<>();
+//    @ManyToMany
+//    @JoinTable(
+//            name = "challenge_user",
+//            joinColumns = @JoinColumn(name = "challenge_id"),
+//            inverseJoinColumns = @JoinColumn(name = "user_id")
+//    )
+//    private Set<User> users = new HashSet<>();
 }

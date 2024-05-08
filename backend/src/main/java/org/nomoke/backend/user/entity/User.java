@@ -1,31 +1,39 @@
 package org.nomoke.backend.user.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
-import org.nomoke.backend.challenge.entity.Challenge;
-import org.nomoke.backend.record.entity.RecordEntity;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+
 
 @Entity
-@Table(name = "user")
 @Getter
 @Setter
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
 
-    @Column(length = 10, nullable = false)
-    private String name;
 
-    @Column(name = "login_id", length = 10, nullable = false)
-    private String loginId;
+    private String username;
+    private String password;
+    private String role;
+    private String firstName;
+    private String lastName;
+    private String gender;
+    private String email;
+    private LocalDate birthDate;
+    private LocalDate createdAt;
 
-    @ManyToMany(mappedBy = "users")
-    private Set<Challenge> challenge = new HashSet<>();
+    @PrePersist
+    public void prePersist() {
 
+        this.createdAt = LocalDate.now();
+    }
 }
