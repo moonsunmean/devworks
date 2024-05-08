@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,11 +30,21 @@ public class AnalysisService {
         LocalDate now = LocalDate.now(); // 현재 날짜
         LocalDate startOfWeek = now.with(DayOfWeek.MONDAY); // 이번 주의 월요일
         LocalDate endOfWeek = now.with(DayOfWeek.SUNDAY); // 이번 주의 일요일
-        LocalDateTime startOfWeekDateTime = startOfWeek.atTime(LocalTime.MIDNIGHT); // 이번 주 월요일 자정
-        LocalDateTime endOfWeekDateTime = endOfWeek.atTime(23, 59, 59); // 이번 주 일요일 23시 59분 59초
+        LocalDate startOfLastWeek = startOfWeek.minusDays(7);
         log.info("start: {}",startOfWeek);
         log.info("end: {}",endOfWeek);
-        return recordRepository.findByUserIdAndRecordDateBetweenOrderByRecordDateAsc(userId, startOfWeek, endOfWeek);
+        return recordRepository.findByUserIdAndRecordDateBetweenOrderByRecordDateAsc
+                (userId, startOfWeek,endOfWeek);
+    }
+    // 저번주 데이터 가져오기
+    public List<RecordEntity> getLastRecordsForUserInDateRange(Long userId) {
+        LocalDate now = LocalDate.now(); // 현재 날짜
+        LocalDate startOfWeek = now.with(DayOfWeek.MONDAY).minusDays(7);; // 이번 주의 월요일
+        LocalDate endOfWeek = now.with(DayOfWeek.SUNDAY).minusDays(7);; // 이번 주의 일요일
+        log.info("startLast: {}",startOfWeek);
+        log.info("endLast: {}",endOfWeek);
+        return recordRepository.findByUserIdAndRecordDateBetweenOrderByRecordDateAsc
+                (userId, startOfWeek,endOfWeek);
     }
 
     public AnalysisDto AnalysisWeek(List<RecordEntity> records){

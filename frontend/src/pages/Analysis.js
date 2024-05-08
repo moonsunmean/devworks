@@ -32,7 +32,7 @@ const Analysis = () => {
 
                  setWeekData(weekData);
                  console.log(weekData);
-                 console.log(weekData.recordEntity);
+                 console.log(weekData.thisWeekRecordEntity);
              } catch (error) {
                  console.error('주간분석 정보 가져오기 실패.', error);
              }
@@ -40,6 +40,8 @@ const Analysis = () => {
 
          fetchWeekData();
      }, [id]); // id가 상태나 prop이라면 이 배열에 추가하면 됩니다.
+
+
     const sampleDiseaseData = [
       { disease: "심장병", risk: 52, info: "보통의 기준 보다 발병 확률 52%", imageUrl:"https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/heart.png?alt=media&token=070b14f4-ef5b-4d40-b0cd-f9b040fef297" },
       { disease: "폐암", risk: 52, info: "20대 흡연자 발병률", imageUrl:"https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/2.png?alt=media&token=ccc647a9-6d5a-47d0-8229-4a9fb1d7c7d1" },
@@ -91,14 +93,16 @@ const Analysis = () => {
         <div id="bottom_contents">
           <h1>주간분석 데이터</h1><br />
           <div id = "chart-area">
-            <WeeklyReportChart records={weekData.recordEntity}/>
+            <WeeklyReportChart records={weekData.thisWeekRecordEntity} records2={weekData.lastWeekRecordEntity}/>
           </div>
-          <img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/%EC%B1%BB%E3%85%81.png?alt=media&token=39328b24-b3a0-4762-9947-20ef187c7c9a" alt="담배 이미지"/>
-          {weekData.cigarette}개비 흡연
-          <br/><img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/money.png?alt=media&token=c85da960-4f30-482c-b313-f2e08218bef1" alt="돈 이미지"/>
-          {weekData.money}원 소비
-          <br/><img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/time.png?alt=media&token=a0ffc1dd-205b-46e2-9e87-bf4367e865d6" alt="담배 이미지"/>
-           {weekData.life}초 생명감소
+          <div id="info-area">
+              <img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/%EC%B1%BB%E3%85%81.png?alt=media&token=39328b24-b3a0-4762-9947-20ef187c7c9a" alt="담배 이미지"/>
+              {weekData.cigarette}개비 흡연
+              <br/><img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/money.png?alt=media&token=c85da960-4f30-482c-b313-f2e08218bef1" alt="돈 이미지"/>
+              {weekData.money}원 소비
+              <br/><img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/time.png?alt=media&token=a0ffc1dd-205b-46e2-9e87-bf4367e865d6" alt="담배 이미지"/>
+               {weekData.life}초 생명감소
+          </div>
         </div>
         <Footer/>
     </div>

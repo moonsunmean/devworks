@@ -24,9 +24,11 @@ public class AnalysisController {
     @GetMapping("/analysis/{id}")
     public ResponseEntity<AnalysisDto> getWeeklyAnalysisByUserId(@PathVariable("id") Long id){
         log.info("id값1: {}",id);
-        List<RecordEntity> recordEntity = analysisService.getRecordsForUserInDateRange(id);
-        AnalysisDto analysisDto = analysisService.AnalysisWeek(recordEntity);
-        analysisDto.setRecordEntity(recordEntity);
+        List<RecordEntity> thisWeekRecordEntity = analysisService.getRecordsForUserInDateRange(id);
+        List<RecordEntity> lastWeekRecordEntity = analysisService.getLastRecordsForUserInDateRange(id);
+        AnalysisDto analysisDto = analysisService.AnalysisWeek(thisWeekRecordEntity);
+        analysisDto.setThisWeekRecordEntity(thisWeekRecordEntity);
+        analysisDto.setLastWeekRecordEntity(lastWeekRecordEntity);
         return new ResponseEntity<>(analysisDto, HttpStatus.OK);
     }
 }
