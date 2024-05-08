@@ -9,9 +9,11 @@ import OngoingChallenge from './pages/challenge/OngoingChallenge.js';
 import Join from './pages/user/Join.js';
 import Login from './pages/user/Login.js';
 import Main from './pages/main/Main.js';
+import Test from "./pages/main/Test";
 
 const router = createBrowserRouter([
     { path: "/", element: <Main /> },
+    { path: "/test", element: <Test /> },
     { path: "/record", element: <Record /> },
     { path: "/analysis", element: <Analysis /> },
     { path: "/challenge", element: <ChallengeCategory /> },

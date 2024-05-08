@@ -1,14 +1,12 @@
 import Calendar from 'react-calendar';
 import "react-calendar/dist/Calendar.css";
-import '../styles/analysis.css';
+import '../../styles/analysis.css';
 import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import React, { useEffect,useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import moment from "moment";
-import WeeklyReportChart from '../components/WeeklyReportChart';
-import Footer from "../components/Footer";
-import Header from "../components/Header";
+import WeeklyReportChart from "../../components/WeeklyReportChart";
 
 const Analysis = () => {
 
@@ -53,7 +51,6 @@ const Analysis = () => {
   return (
 
     <div className="analysis-page">
-        <Header />
         <div id="top_contents">
             <div className = "userinfo-area">
                 <div id = "userinfo">
@@ -100,7 +97,6 @@ const Analysis = () => {
           <br/><img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/time.png?alt=media&token=a0ffc1dd-205b-46e2-9e87-bf4367e865d6" alt="담배 이미지"/>
            {weekData.life}초 생명감소
         </div>
-        <Footer/>
     </div>
 
   );

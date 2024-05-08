@@ -1,6 +1,6 @@
-//package org.nomoke.backend.challenge.constant;
-//
-//public enum ChallengeType {
-//
-//    INDIVIDUAL, GROUP
-//}
+package org.nomoke.backend.challenge.constant;
+
+public enum ChallengeType {
+
+    INDIVIDUAL, GROUP
+}
