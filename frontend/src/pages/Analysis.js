@@ -9,8 +9,10 @@ import moment from "moment";
 import WeeklyReportChart from '../components/WeeklyReportChart';
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import MapContent from '../components/MapContent';
 
 const Analysis = () => {
+
 
   /*----------Calender Control*/
     // 캘린더 날짜관리 상태
@@ -39,8 +41,25 @@ const Analysis = () => {
          };
 
          fetchWeekData();
-     }, [id]); // id가 상태나 prop이라면 이 배열에 추가하면 됩니다.
+     }, [id]);
 
+        if (!weekData) {
+                return <div>Loading...</div>;
+       }
+       const labels = ['월', '화', '수', '목', '금', '토','일'];
+       // 요일별 흡연량 데이터  인덱스 조정
+        const adjustDayIndex = (date) => {
+            const day = new Date(date).getDay(); // 일요일 = 0, 월요일 = 1, ..., 토요일 = 6
+            return day === 0 ? 6 : day - 1; // 일요일이면 6 반환, 나머지는 하루씩 미뤄서 반환
+        };
+
+        // 저번 주 데이터
+        const smokeDataLastWeek = labels.map((label, index) => {
+            const record = weekData.lastWeekRecordEntity.find(r => adjustDayIndex(r.recordDate) === index);
+            return record ? record.recordAmount : 0;
+        });
+
+        const lastSmokeTotal = smokeDataLastWeek.reduce((acc, cur) => acc + cur, 0) ;
 
     const sampleDiseaseData = [
       { disease: "심장병", risk: 52, info: "보통의 기준 보다 발병 확률 52%", imageUrl:"https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/heart.png?alt=media&token=070b14f4-ef5b-4d40-b0cd-f9b040fef297" },
@@ -55,7 +74,6 @@ const Analysis = () => {
   return (
 
     <div className="analysis-page">
-        <Header />
         <div id="top_contents">
             <div className = "userinfo-area">
                 <div id = "userinfo">
@@ -97,13 +115,23 @@ const Analysis = () => {
           </div>
           <div id="info-area">
               <img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/%EC%B1%BB%E3%85%81.png?alt=media&token=39328b24-b3a0-4762-9947-20ef187c7c9a" alt="담배 이미지"/>
-              {weekData.cigarette}개비 흡연
+              <strong>{weekData.cigarette}</strong>개비 흡연 (약 {Math.round(weekData.cigarette/20)}값)
+              {weekData.cigarette - lastSmokeTotal > 0 ? (<span style={{ color: "red" }}><strong>↑</strong></span>) : (<span style={{ color: "blue" }}> <strong>↓</strong></span>)}
               <br/><img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/money.png?alt=media&token=c85da960-4f30-482c-b313-f2e08218bef1" alt="돈 이미지"/>
-              {weekData.money}원 소비
+              <strong>{weekData.money}</strong>원 소비
+{weekData.cigarette - lastSmokeTotal > 0 ? (<span style={{ color: "red" }}><strong>↑</strong></span>) : (<span style={{ color: "blue" }}> <strong>↓</strong></span>)}
               <br/><img src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/time.png?alt=media&token=a0ffc1dd-205b-46e2-9e87-bf4367e865d6" alt="담배 이미지"/>
-               {weekData.life}초 생명감소
+               <strong>{weekData.life}</strong>초 생명감소
+{weekData.cigarette - lastSmokeTotal > 0 ? (<span style={{ color: "red" }}><strong>↑</strong></span>) : (<span style={{ color: "blue" }}> <strong>↓</strong></span>)}
           </div>
+               <br/> 저번주 대비 주간 흡연량이 &nbsp;
+               {weekData.cigarette-lastSmokeTotal >0 ?
+                  weekData.cigarette-lastSmokeTotal + "개비 증가하였으며, "
+                : lastSmokeTotal-weekData.cigarette + "개비 감소하였으며, " }
+                이번주 평균 흡연량은 { Math.round(weekData.cigarette/7)}개비입니다.<br/>
+                금연을 위해 Nomoke와 함께 조금만 노력해주세요.
         </div>
+        <MapContent/>
         <Footer/>
     </div>
 

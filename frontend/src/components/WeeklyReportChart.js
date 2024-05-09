@@ -31,7 +31,10 @@ const WeeklyReportChart = ({ records, records2 }) => {
     });
 
     // 저번 주 데이터
-
+    const smokeDataLastWeek = labels.map((label, index) => {
+        const record = records2.find(r => adjustDayIndex(r.recordDate) === index);
+        return record ? record.recordAmount : 0;
+    });
    const average = smokeDataThisWeek.reduce((acc, cur) => acc + cur, 0) / smokeDataThisWeek.length;
 
     const data = {
