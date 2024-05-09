@@ -21,7 +21,8 @@
 https://www.figma.com/file/6SY0nnoVQeyE6o94u3fvQV/Untitled?type=design&node-id=0-1&mode=design&t=xngSmlxQKYxhQJ3k-0
 
 ERD
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/7265a746-b8e9-45da-ad5f-cafe2aba4e34/f06b8a6d-b687-47c6-9ef5-3c1033f58f2f/Untitled.png)
+![Uploading image.png…]()
+
 
 기능명세서
 https://docs.google.com/spreadsheets/d/1Dh2Xd1nuJST977FsuWn7eRqPyaDJsPQIy2bAHofICKc/edit#gid=0
