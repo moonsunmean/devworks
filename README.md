@@ -15,15 +15,13 @@
 
 
 ---
-
+노션
+https://www.notion.so/67293c0f96c14806b42879ac997c1c08
 
 와이어프레임
 https://www.figma.com/file/6SY0nnoVQeyE6o94u3fvQV/Untitled?type=design&node-id=0-1&mode=design&t=xngSmlxQKYxhQJ3k-0
 
 ERD
-![Uploading image.png…]()
+https://app.diagrams.net/?src=about#G1b8Id-wN3bAM4YanEFudmfOc_3aCtWsDP#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D
 
-
-기능명세서
-https://docs.google.com/spreadsheets/d/1Dh2Xd1nuJST977FsuWn7eRqPyaDJsPQIy2bAHofICKc/edit#gid=0
 
