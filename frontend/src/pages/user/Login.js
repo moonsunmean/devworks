@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import Header from "../../components/Header";
+import Footer from "../../components/Footer";
+import {Container, Form} from "react-bootstrap";
+import Button from "react-bootstrap/Button";
 
-function Login() {
+function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -43,32 +47,66 @@ function Login() {
 
   return (
     <div>
-      <h2>로그인</h2>
-      {error && <div>{error}</div>}
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="username">아이디 </label>
-          <input
-            type="text"
-            id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="password">비밀번호 </label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">로그인</button>
-        <Link to="/join">회원가입</Link>
-      </form>
+        <Container className="text-white" style={{margin: "130px", padding: "50px", width: "600px", borderRadius: "10px", background: "black"}}>
+            {error && <div>{error}</div>}
+            <Form onSubmit={handleLogin}>
+                <h2 className="text-center my-5">로그인</h2>
+                <div className="mb-3">
+                    <label htmlFor="username">아이디 </label>
+                    <input
+                        type="text"
+                        id="username"
+                        className="form-control"
+                        placeholder="아이디를 입력해 주세요"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                    />
+                </div>
+                <div className="mb-3">
+                    <label htmlFor="password">비밀번호 </label>
+                    <input
+                        type="password"
+                        id="password"
+                        className="form-control"
+                        placeholder="비밀번호를 입력해 주세요"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+                <div className="d-grid mt-5">
+                    <Button type="submit" className="btn btn-danger">
+                        로그인
+                    </Button>
+                </div>
+                <p className="forgot-password text-white my-3">
+                    <Link to="/join">회원가입 하러가기</Link>
+                </p>
+                <hr/>
+                <div>
+                    <h5 className="my-4 text-center"> 간편로그인 </h5>
+                    <div style={{display: "flex", justifyContent: "space-around"}}>
+                        <a href="http://34.64.51.56:5000/oauth2/authorization/kakao" style={{width: '75px'}}><img
+                            src="img/kakao.png" alt="카카오로그인"/></a>
+                        <a href="http://34.64.51.56:5000/oauth2/authorization/naver" style={{width: '75px%'}}><img
+                            src="img/naver.png" alt="네이버로그인"/></a>
+                        <a href="http://34.64.51.56:5000/oauth2/authorization/google" style={{width: '75px%'}}><img
+                            src="img/google.png" alt="구글로그인"/></a>
+                    </div>
+                </div>
+            </Form>
+        </Container>
     </div>
   );
+}
+
+function Login() {
+    return (
+        <div style={{background: "#2d2d2d"}}>
+            <Header/>
+            <LoginForm/>
+            <Footer/>
+        </div>
+    );
 }
 
 export default Login;

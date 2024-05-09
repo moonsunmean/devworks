@@ -5,6 +5,7 @@ import moment from "moment/moment";
 import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
+import {Container} from "react-bootstrap";
 
 function RecordPage() {
     const [date, setDate] = useState(new Date());
@@ -71,18 +72,19 @@ function RecordPage() {
 
     return (
         <>
-            <div className="container py-4" style={{width: "1100px"}}>
-                <div className="p-5 m-4 rounded-3" style={{background: "#5e5e5e", height: "400px"}}>
+            <Container className="py-4" style={{width: "1100px"}}>
+                <div className="p-5 m-4 rounded-3" style={{background: "#5e5e5e", padding: "100px"}}>
                     <div className="container-fluid py-5">
                         <h2 className="display-5 fw-bold text-white">오늘 나의 흡연량은?</h2>
-                        <label className="text-white" htmlFor="date">날짜를 선택하세요:
+                        <label className="text-white my-2" htmlFor="date">날짜를 선택하세요 :
                             <input type="date"
                                    id="date"
+                                   className="form-control my-2"
                                    value={moment(date).format("YYYY-MM-DD")} // Bind value to selected date
                                    onChange={(e) => setDate(new Date(e.target.value))}/>
                         </label>
                         <input
-                            className="form-control form-control-lg my-4"
+                            className="form-control form-control-lg my-3"
                             type="text"
                             placeholder="숫자만 입력해주세요 (개비)"
                             aria-label=".form-control-lg example"
@@ -98,7 +100,7 @@ function RecordPage() {
                         </button>
                     </div>
                 </div>
-            </div>
+            </Container>
             <div className="container py-4" style={{width: "1100px"}}>
                 <div className="p-5 m-4 rounded-3" style={{background: "#5e5e5e"}}>
                     <div className="container-fluid py-5">
