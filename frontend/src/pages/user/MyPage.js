@@ -8,8 +8,9 @@ function MyPage() {
 
     useEffect(() => {
 
-        async function fetchUserData(userId) {
+        async function fetchUserData() {
             try {
+                console.log({userId});
                 const userDataResponse = await axios.get(`/api/user/${userId}`);
                 setUserData(userDataResponse.data);
             } catch (error) {

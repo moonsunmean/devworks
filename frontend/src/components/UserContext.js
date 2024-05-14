@@ -4,7 +4,7 @@ import axios from 'axios';
 // 초기 상태값 설정
 const initialState = {
     loggedInUser: '',
-    userId: null,
+    userId: '',
     setLoggedInUser: () => {},
     setUserId: () => {}
 };
@@ -14,7 +14,7 @@ export const UserContext = createContext(initialState);
 
 export const UserProvider = ({ children }) => {
     const [loggedInUser, setLoggedInUser] = useState('');
-    const [userId, setUserId] = useState(null);
+    const [userId, setUserId] = useState('');
 
     // 페이지 로드 시 토큰에서 username 추출
     useEffect(() => {
