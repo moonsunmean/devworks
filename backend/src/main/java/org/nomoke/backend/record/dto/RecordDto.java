@@ -10,4 +10,5 @@ import java.util.Date;
 public class RecordDto {
     private Long recordAmount;
     private Date recordDate;
+    private Long recordUserId;
 }

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import moment from "moment/moment";
@@ -6,16 +6,18 @@ import Calendar from "react-calendar";
 import 'react-calendar/dist/Calendar.css';
 import axios from "axios";
 import {Container} from "react-bootstrap";
+import {UserContext} from "../../components/UserContext";
 
 function RecordPage() {
     const [date, setDate] = useState(new Date());
     const [amount, setAmount] = useState("");
     const [records, setRecords] = useState([]);
+    const { userId } = useContext(UserContext);
     // 저장 버튼 클릭 시 호출되는 함수
 
     useEffect(() => {
         // 페이지가 로드될 때 한 번만 실행되도록 설정
-        axios.get("/api/record")
+        axios.get(`/api/record/${userId}`)
             .then(response => {
                 // 성공적으로 데이터를 받아오면 상태 업데이트
                 setRecords(response.data);
@@ -23,7 +25,7 @@ function RecordPage() {
             .catch(error => {
                 console.error("데이터를 가져오는 중 에러 발생:", error);
             });
-    }, []);
+    }, [userId]);
     const tileContent = ({ date, view }) => {
         if (view === 'month') {
             const recordForDate = records.find(record => moment(record.recordDate).isSame(date, 'day'));
@@ -43,7 +45,8 @@ function RecordPage() {
         if (amount) {
             axios.post("/api/record", {
                 recordAmount: amount,
-                recordDate: date
+                recordDate: date,
+                recordUserId: userId
             }, {
                 headers: {
                     "Content-Type": "application/json"
@@ -75,7 +78,7 @@ function RecordPage() {
             <Container className="py-4" style={{width: "1100px"}}>
                 <div className="p-5 m-4 rounded-3" style={{background: "#5e5e5e", padding: "100px"}}>
                     <div className="container-fluid py-5">
-                        <h2 className="display-5 fw-bold text-white">오늘 나의 흡연량은?</h2>
+                        <h2 className="display-5 fw-bold text-white">오늘 나의 흡연량은? {userId}</h2>
                         <label className="text-white my-2" htmlFor="date">날짜를 선택하세요 :
                             <input type="date"
                                    id="date"

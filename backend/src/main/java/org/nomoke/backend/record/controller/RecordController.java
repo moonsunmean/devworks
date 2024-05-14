@@ -4,6 +4,7 @@ import org.nomoke.backend.record.dto.RecordDto;
 import org.nomoke.backend.record.entity.RecordEntity;
 import org.nomoke.backend.record.repository.RecordRepository;
 import org.nomoke.backend.record.service.RecordService;
+import org.nomoke.backend.user.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,12 +25,12 @@ public class RecordController {
         this.recordService = recordService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<RecordEntity>> getAllRecords() {
-        List<RecordEntity> recordEntities = recordService.selectRecords();
-        return ResponseEntity.ok(recordEntities);
+    @GetMapping("/{userId}")
+    public ResponseEntity<List<RecordEntity>> getRecordsById(@PathVariable("userId") Long userId) {
+        System.out.println(userId);
+        List<RecordEntity> recordEntity = recordService.selectRecords(userId);
+        return ResponseEntity.ok(recordEntity);
     }
-
 
     @PostMapping
     public ResponseEntity<String> createRecord(@RequestBody RecordDto recordDto) {

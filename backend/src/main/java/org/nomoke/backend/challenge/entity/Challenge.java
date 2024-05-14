@@ -11,7 +11,6 @@ import org.nomoke.backend.challenge.constant.RecordType;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "challenge")
 @Getter
 @Setter
 public class Challenge {
