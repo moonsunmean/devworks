@@ -31,7 +31,7 @@ export const UserProvider = ({ children }) => {
                     }
                 })
                 .then(response => {
-                    setUserId(response.data);
+                    setUserId(parseInt(response.data));
                 })
                 .catch(error => {
                     console.error('Error fetching userId:', error);

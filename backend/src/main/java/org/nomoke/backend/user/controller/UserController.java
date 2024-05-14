@@ -24,21 +24,21 @@ public class UserController {
 
     //회원정보조회
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable Long userId) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") Long userId) {
         UserDto userDto = userService.getUserById(userId);
         return ResponseEntity.ok(userDto);
     }
 
     //회원정보수정
     @PutMapping("/{userId}")
-    public ResponseEntity<UserDto> updateUserById(@PathVariable Long userId, @RequestBody UserDto userDto) {
+    public ResponseEntity<UserDto> updateUserById(@PathVariable("userId") Long userId, @RequestBody UserDto userDto) {
         UserDto updatedUserDto = userService.updateUserById(userId, userDto);
         return ResponseEntity.ok(updatedUserDto);
     }
 
     //회원 탈퇴
     @DeleteMapping("/{userId}")
-    public void deleteUserById(@PathVariable Long userId) {
+    public void deleteUserById(@PathVariable("userId") Long userId) {
         userService.deleteUserById(userId);
     }
 }
