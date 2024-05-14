@@ -16,7 +16,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
 
-@Component
 public class JWTFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtUtil;
@@ -29,15 +28,14 @@ public class JWTFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("JWTFilter: doFilterInternal메소드 들어옴");
 
         //request에서 Authorization 헤더를 찾음
         String authorization= request.getHeader("Authorization");
 
         //Authorization 헤더 검증
         if (authorization == null || !authorization.startsWith("Bearer ")) {
-
             filterChain.doFilter(request, response);
-
             //조건이 해당되면 메소드 종료 (필수)
             return;
         }
@@ -50,25 +48,30 @@ public class JWTFilter extends OncePerRequestFilter {
 
             System.out.println("토큰이 만료되었습니다.");
             System.out.println("Expired Token: " + token);
-            filterChain.doFilter(request, response);
-
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             //조건이 해당되면 메소드 종료 (필수)
             return;
         }
 
-        //토큰에서 username과 role 획득
-        String username = jwtUtil.getUsername(token);
-        String role = jwtUtil.getRole(token);
+        try {
+            // 토큰에서 username과 role 획득
+            String username = jwtUtil.getUsername(token);
+            String role = jwtUtil.getRole(token);
 
-        // CustomUserDetails를 로드하기 위해 CustomUserDetailsService에서 사용자 정보 가져오기
-        CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(username);
+            // CustomUserDetails를 로드하기 위해 CustomUserDetailsService에서 사용자 정보 가져오기
+            CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(username);
 
-        //스프링 시큐리티 인증 토큰 생성
-        Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
-        //세션에 사용자 등록
-        SecurityContextHolder.getContext().setAuthentication(authToken);
+            // 스프링 시큐리티 인증 토큰 생성
+            Authentication authToken = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+            // 세션에 사용자 등록
+            SecurityContextHolder.getContext().setAuthentication(authToken);
 
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+        } catch (Exception e) {
+            // 예외 처리
+            System.out.println("토큰 유효성 검사 중 오류 발생: " + e.getMessage());
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        }
 
     }
 }

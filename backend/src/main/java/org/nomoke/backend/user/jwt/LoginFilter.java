@@ -6,7 +6,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.nomoke.backend.user.dto.CustomUserDetails;
-import org.nomoke.backend.user.dto.LoginRequest;
+import org.nomoke.backend.user.dto.LoginDto;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,11 +36,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         try {
             // 요청 페이로드에서 데이터를 JSON 형식으로 읽어오기
             ObjectMapper objectMapper = new ObjectMapper();
-            LoginRequest loginRequest = objectMapper.readValue(request.getReader(), LoginRequest.class);
+            LoginDto loginDto = objectMapper.readValue(request.getReader(), LoginDto.class);
 
             // 가져온 데이터에서 사용자 이름과 비밀번호 추출
-            String username = loginRequest.getUsername();
-            String password = loginRequest.getPassword();
+            String username = loginDto.getUsername();
+            String password = loginDto.getPassword();
 
             // 로그 확인
             System.out.println("Username: " + username);

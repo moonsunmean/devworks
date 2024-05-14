@@ -44,7 +44,7 @@ function Test() {
                 <div>
                     <p>{`안녕하세요, ${loggedInUser} 님`}</p>
                     <button onClick={logout}>로그아웃</button>
-                    <Link to="/test">테스트 페이지로 이동하기</Link>
+                    <Link to="/hello-test">테스트 페이지로 이동하기</Link>
                 </div>
             ) : (
                 <div>

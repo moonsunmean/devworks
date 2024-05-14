@@ -26,10 +26,7 @@ public class JoinDto {
     private String password;
 
     @NotEmpty
-    private String firstName;
-
-    @NotEmpty
-    private String lastName;
+    private String name;
 
     @NotEmpty
     private String gender;

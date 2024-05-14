@@ -27,9 +27,4 @@ public class JoinController {
             return new ResponseEntity<>("회원가입 처리 중 오류가 발생했습니다.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-    @GetMapping("/join")
-    public String joinP() {
-        return "hello";
-    }
 }

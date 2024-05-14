@@ -10,12 +10,13 @@ import java.time.LocalDate;
 @Setter
 public class UserDto {
 
+    private Long id;
     private String username;
-    private String role;
-    private String firstName;
-    private String lastName;
+    private String password;
+    private String name;
     private String gender;
     private String email;
     private LocalDate birthDate;
-
+    private LocalDate createdAt;
+    private String role;
 }

@@ -23,8 +23,7 @@ public class JoinService {
 
         String username = joinDto.getUsername();
         String password = joinDto.getPassword();
-        String firstName = joinDto.getFirstName();
-        String lastName = joinDto.getLastName();
+        String name = joinDto.getName();
         String gender = joinDto.getGender();
         String email = joinDto.getEmail();
         LocalDate birthDate = joinDto.getBirthDate();
@@ -41,8 +40,7 @@ public class JoinService {
         data.setUsername(username);
         data.setPassword(bCryptPasswordEncoder.encode(password));     //비밀번호는 무조건 암호화해서 등록
         data.setRole(role);
-        data.setFirstName(firstName);
-        data.setLastName(lastName);
+        data.setName(name);
         data.setGender(gender);
         data.setEmail(email);
         data.setBirthDate(birthDate);

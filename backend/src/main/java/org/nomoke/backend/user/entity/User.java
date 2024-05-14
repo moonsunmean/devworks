@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
 
@@ -18,22 +19,17 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-
+    private Long id;
 
     private String username;
     private String password;
     private String role;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String gender;
     private String email;
     private LocalDate birthDate;
+
+    @CreationTimestamp
     private LocalDate createdAt;
 
-    @PrePersist
-    public void prePersist() {
-
-        this.createdAt = LocalDate.now();
-    }
 }

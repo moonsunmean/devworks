@@ -3,7 +3,7 @@ package org.nomoke.backend.user.dto;
 import lombok.Data;
 
 @Data
-public class LoginRequest {
+public class LoginDto {
 
     private String username;
     private String password;

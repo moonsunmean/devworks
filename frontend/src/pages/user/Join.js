@@ -13,8 +13,7 @@ function JoinForm() {
     const [joinData, setJoinData] = useState({
         username: '',
         password: '',
-        firstName: '',
-        lastName: '',
+        name: '',
         gender: '',
         email: '',
         birthDate: '',
@@ -70,15 +69,10 @@ function JoinForm() {
                     </div>
                     <div className="mb-3">
                         <label>이름</label>
-                        <input type="text" name="firstName" value={joinData.firstName} onChange={handleChange}
+                        <input type="text" name="name" value={joinData.name} onChange={handleChange}
                                className="form-control"
                                required/>
-                        {errors.firstName && <span>{errors.firstName}</span>}
-                    </div>
-                    <div className="mb-3">
-                        <label>성</label>
-                        <input type="text" name="lastName" value={joinData.lastName} onChange={handleChange} className="form-control" required/>
-                        {errors.lastName && <span>{errors.lastName}</span>}
+                        {errors.name && <span>{errors.name}</span>}
                     </div>
                     <div className="mb-3">
                         <label>성별</label>
