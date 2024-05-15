@@ -3,7 +3,7 @@ package org.nomoke.backend.analysis.entity;
 import jakarta.persistence.Entity;
 import lombok.*;
 
-@Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter

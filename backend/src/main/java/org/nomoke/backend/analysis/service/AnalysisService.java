@@ -69,28 +69,29 @@ public class AnalysisService {
 
         return new AnalysisDto(totalAmount,money,time);
     }
-    @Service
-    public class CSVService {
 
-        public List<HealthCenter> readHealthCentersFromCSV() throws IOException, CsvException {
-            List<HealthCenter> healthCenters = new ArrayList<>();
-            try (CSVReader reader = new CSVReader(new InputStreamReader(new ClassPathResource("health_centers.csv").getInputStream()))) {
-                List<String[]> records = reader.readAll();
-                for (int i = 1; i < records.size(); i++) { // Skip the header row
-                    String[] record = records.get(i);
-                    HealthCenter healthCenter = new HealthCenter(
-                            record[0], // Type
-                            record[1], // City
-                            record[2], // District
-                            record[3], // Name
-                            Integer.parseInt(record[4]) // Counselor Count
 
-                    );
-                    log.info("start: {}",healthCenter);
-                    healthCenters.add(healthCenter);
-                }
+
+    public List<HealthCenter> getAllHealthCenters() throws IOException, CsvException {
+        List<HealthCenter> healthCenters = new ArrayList<>();
+        try (CSVReader reader = new CSVReader(new InputStreamReader(new ClassPathResource("health_center.csv").getInputStream(), "UTF-8"))) {
+            List<String[]> records = reader.readAll();
+            for (int i = 1; i < records.size(); i++) { // Skip the header row
+                String[] record = records.get(i);
+                HealthCenter healthCenter = new HealthCenter(
+                        record[0], // Type(보건소, 금연지원센터)
+                        record[1], // City(시)
+                        record[2], // District(구 등 지역구분)
+                        record[3], // Name(주소 이름)
+                        Integer.parseInt(record[4]) // Counselor Count
+
+                );
+                log.info("start: {}",healthCenter);
+                healthCenters.add(healthCenter);
             }
-            return healthCenters;
         }
+        return healthCenters;
     }
+
+
 }
