@@ -148,6 +148,13 @@ function RecordPage() {
     const isSmokeFreeDay = () => {
         return getRecordsForSelectedDate().length === 0; // 담배 달력에 기록이 없는 경우
     };
+    const calculateSmokeFreeDays = () => {
+        // 마지막 기록이 있는 날짜부터 오늘까지의 일 수를 계산합니다.
+        const lastRecordDate = records.length > 0 ? moment(records[records.length - 1].recordDate) : moment();
+        const today = moment();
+        return today.diff(lastRecordDate, 'days');
+    };
+
     return (
         <>
             <Container className="py-4" style={{width: "1100px"}}>
@@ -233,7 +240,7 @@ function RecordPage() {
                                                         <div>{record.recordAmount} 개비</div>
                                                     ))
                                                 ) : (
-                                                    "오늘은 금연 성공!"
+                                                    `금연 ${calculateSmokeFreeDays()}일째 입니다!`
                                                 )}
                                             </h3>
                                         )}
