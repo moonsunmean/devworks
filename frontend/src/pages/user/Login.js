@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import {Container, Form} from "react-bootstrap";
 import Button from "react-bootstrap/Button";
+import { UserContext } from "../../components/UserContext";
 
 function LoginForm() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
+    const { setUser } = useContext(UserContext);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+    const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
         const response = await axios.post('/login', {
-          username: username,
-          password: password
+            username: username,
+            password: password
         });
 
         console.log('Response:', response);
@@ -30,22 +32,32 @@ function LoginForm() {
         // 서버에서 받은 토큰을 로컬스토리지에 저장
         localStorage.setItem('token', token);
 
+        // 토큰을 해독하여 userId 추출
+        const payload = token.split('.')[1];
+        const decodedPayload = JSON.parse(atob(payload));
+        const userId = decodedPayload.userId;
+
+        const userData = {
+            userId: userId
+        }
+        setUser(userData);
+
         // 로그인 성공 시 메인 화면으로 이동
         navigate('/');
 
     } catch (error) {
-      if (error.response.status === 404) {
-        setError('존재하지 않는 아이디입니다.');
-      } else if (error.response.status === 401) {
-        setError('비밀번호를 확인하세요.');
-      } else {
-        setError('로그인에 실패했습니다. 다시 시도해주세요.');
-      }
+        if (error.response.status === 404) {
+            setError('존재하지 않는 아이디입니다.');
+        } else if (error.response.status === 401) {
+            setError('비밀번호를 확인하세요.');
+        } else {
+            setError('로그인에 실패했습니다. 다시 시도해주세요.');
+        }
     }
-  };
+};
 
 
-  return (
+    return (
     <div>
         <Container className="text-white" style={{margin: "130px", padding: "50px", width: "600px", borderRadius: "10px", background: "black"}}>
             {error && <div>{error}</div>}

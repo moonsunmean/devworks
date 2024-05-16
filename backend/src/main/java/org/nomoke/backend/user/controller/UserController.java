@@ -15,13 +15,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    //username을통해 userId조회
-    @GetMapping("/getId")
-    public ResponseEntity<Long> getUserIdByUsername(@RequestParam("username") String username) {
-        Long userId = userService.getUserIdByUsername(username);
-        return ResponseEntity.ok(userId);
-    }
-
     //회원정보조회
     @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUserById(@PathVariable("userId") Long userId) {

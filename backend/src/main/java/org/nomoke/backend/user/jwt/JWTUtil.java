@@ -39,11 +39,12 @@ public class JWTUtil {
     }
 
     //토큰 생성 -> 로그인 성공했을 때 username, role, 만료시간 등을 전달받아서 토큰을 생성해서 응답
-    public String createJwt(String username, String role, Long expiredMs) {
+    public String createJwt(String username, String role, Long userId, Long expiredMs) {
 
         return Jwts.builder()
                 .claim("username", username)
                 .claim("role", role)
+                .claim("userId", userId)
                 .issuedAt(new Date(System.currentTimeMillis()))     //토큰 발행 시간
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))       //토큰 소멸 시간
                 .signWith(secretKey)    //암호화 진행

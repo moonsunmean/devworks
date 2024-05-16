@@ -8,9 +8,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
+@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -21,16 +23,8 @@ public class UserService {
         this.userMapper = userMapper;
     }
 
-    //userId 받아오기
-    public Long getUserIdByUsername(String username) {
-        User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("User not found with username: " + username);
-        }
-        return user.getId();
-    }
-
     //회원 정보 조회
+    @Transactional(readOnly = true)
     public UserDto getUserById(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));

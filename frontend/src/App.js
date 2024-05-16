@@ -1,5 +1,5 @@
 import React from 'react';
-import { createBrowserRouter, RouterProvider, Route } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { UserProvider } from './components/UserContext';
 
 import ChallengeCategory from './components/challenge/ChallengeCategory.js';
@@ -10,6 +10,7 @@ import OngoingChallenge from './pages/challenge/OngoingChallenge.js';
 import Join from './pages/user/Join.js';
 import Login from './pages/user/Login.js';
 import MyPage from './pages/user/MyPage.js';
+import EditUser from './pages/user/EditUser.js';
 import Main from './pages/main/Main.js';
 import Test from "./pages/main/Test";
 import HelloTest from "./pages/main/HelloTest";
@@ -24,6 +25,7 @@ const router = createBrowserRouter([
     { path: "/join", element: <Join /> },
     { path: "/login", element: <Login /> },
     { path: "/my-page", element: <MyPage /> },
+    { path: "/edit-user", element: <EditUser /> },
     { path: "/ongoing", element: <OngoingChallenge /> },
     { path: "/hello-test", element: <HelloTest />}
 ]);

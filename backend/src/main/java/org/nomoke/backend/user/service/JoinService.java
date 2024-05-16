@@ -19,6 +19,14 @@ public class JoinService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    public boolean checkDuplicateUsername(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    public boolean checkDuplicateEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
     public void joinProcess(JoinDto joinDto) {
 
         String username = joinDto.getUsername();
@@ -29,9 +37,10 @@ public class JoinService {
         LocalDate birthDate = joinDto.getBirthDate();
         String role = joinDto.getRole();
 
-        Boolean isExist = userRepository.existsByUsername(username);
+        boolean isDuplicateUsername = checkDuplicateUsername(username);
+        boolean isDuplicateEmail = checkDuplicateEmail(email);
 
-        if (isExist) {
+        if (isDuplicateUsername || isDuplicateEmail) {
             return;
         }
 

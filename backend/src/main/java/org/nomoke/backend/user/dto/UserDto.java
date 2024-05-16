@@ -1,6 +1,7 @@
 package org.nomoke.backend.user.dto;
 
 
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,13 +11,28 @@ import java.time.LocalDate;
 @Setter
 public class UserDto {
 
-    private Long id;
+    @NotEmpty
+    @Pattern(regexp = "^(?=.*[a-z])[a-z0-9]{6,12}$")
+    @Pattern(regexp = "^(?!admin$)")
     private String username;
-    private String password;
+
+    @NotEmpty
+    @Pattern(regexp = "^[가-힣]*$")
     private String name;
+
+    @NotEmpty
     private String gender;
+
+    @NotEmpty
+    @Email
     private String email;
+
+    @NotNull
+    @Past
     private LocalDate birthDate;
-    private LocalDate createdAt;
+
+
     private String role;
+    private LocalDate createdAt;
+
 }

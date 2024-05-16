@@ -4,10 +4,9 @@ import org.nomoke.backend.user.dto.JoinDto;
 import org.nomoke.backend.user.service.JoinService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 public class JoinController {
@@ -16,6 +15,18 @@ public class JoinController {
 
     public JoinController(JoinService joinService) {
         this.joinService = joinService;
+    }
+
+    @PostMapping("/check-duplicate/username")
+    public boolean checkDuplicateUsername(@RequestBody Map<String, String> requestBody) {
+        String username = requestBody.get("username");
+        return joinService.checkDuplicateUsername(username);
+    }
+
+    @PostMapping("/check-duplicate/email")
+    public boolean checkDuplicateEmail(@RequestBody Map<String, String> requestBody) {
+        String email = requestBody.get("email");
+        return joinService.checkDuplicateEmail(email);
     }
 
     @PostMapping("/join")
