@@ -33,8 +33,20 @@ public class RecordController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createRecord(@RequestBody RecordDto recordDto) {
-        recordService.createRecord(recordDto);
+    public ResponseEntity<String> saveRecord(@RequestBody RecordDto recordDto) {
+        recordService.saveRecord(recordDto);
         return ResponseEntity.ok("기록이 저장되었습니다.");
+    }
+
+    @PutMapping
+    public ResponseEntity<String> updateRecord(@RequestBody RecordDto recordDto) {
+        recordService.updateRecord(recordDto);
+        return ResponseEntity.ok("기록이 수정되었습니다.");
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteRecord(@RequestBody RecordDto recordDto) {
+        recordService.deleteRecord(recordDto);
+        return ResponseEntity.ok("기록이 삭제되었습니다.");
     }
 }

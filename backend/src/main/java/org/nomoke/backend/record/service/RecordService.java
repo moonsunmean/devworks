@@ -23,12 +23,38 @@ public class RecordService {
     public List<RecordEntity> selectRecords(Long userId) {
         return recordRepository.findByUserId(userId);
     }
-    public void createRecord(RecordDto recordDto) {
-        RecordEntity recordEntity = new RecordEntity();
-        recordEntity.setRecordAmount(recordDto.getRecordAmount());
-        recordEntity.setRecordDate(recordDto.getRecordDate());
-        recordEntity.setUserId(recordDto.getRecordUserId());
+    public void saveRecord(RecordDto recordDto) {
+        // 기존에 같은 recordDate가 존재하는지 확인
+        RecordEntity existingRecord = recordRepository.findByUserIdAndRecordDate(recordDto.getRecordUserId(), recordDto.getRecordDate());
 
-        recordRepository.save(recordEntity);
+        if (existingRecord != null) {
+            // 기존 레코드가 존재할 경우 RecordAmount를 더함
+            existingRecord.setRecordAmount(existingRecord.getRecordAmount() + recordDto.getRecordAmount());
+        } else {
+            // 기존 레코드가 없을 경우 새로운 레코드 생성
+            RecordEntity newRecord = new RecordEntity();
+            newRecord.setRecordAmount(recordDto.getRecordAmount());
+            newRecord.setRecordDate(recordDto.getRecordDate());
+            newRecord.setUserId(recordDto.getRecordUserId());
+            recordRepository.save(newRecord);
+        }
+    }
+
+    public void updateRecord(RecordDto recordDto) {
+        // 기존에 같은 recordDate가 존재하는지 확인
+        RecordEntity existingRecord = recordRepository.findByUserIdAndRecordDate(recordDto.getRecordUserId(), recordDto.getRecordDate());
+
+        if (existingRecord != null) {
+            // 기존 레코드가 존재할 경우 RecordAmount를 업데이트
+            existingRecord.setRecordAmount(recordDto.getRecordAmount());
+            recordRepository.save(existingRecord);
+        } else {
+            // 기존 레코드가 없으면 업데이트할 레코드가 없음을 알림
+            throw new RuntimeException("업데이트할 레코드가 없습니다.");
+        }
+    }
+
+    public void deleteRecord(RecordDto recordDto) {
+        recordRepository.deleteByRecordDate(recordDto.getRecordDate());
     }
 }
