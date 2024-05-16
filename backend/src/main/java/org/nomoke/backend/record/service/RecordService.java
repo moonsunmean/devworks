@@ -54,7 +54,7 @@ public class RecordService {
         }
     }
 
-    public void deleteRecord(RecordDto recordDto) {
-        recordRepository.deleteByRecordDate(recordDto.getRecordDate());
+    public void deleteRecord(Long recordId) {
+        recordRepository.deleteById(recordId);
     }
 }

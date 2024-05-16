@@ -119,6 +119,32 @@ function RecordPage() {
         setIsEditing(false); // 수정 모드 종료
         setIsButtonVisible(true); // 저장 버튼 클릭 시 버튼 표시
     };
+
+    const handleDelete = () => {
+        // 삭제할 기록의 ID를 찾습니다. 이 예시에서는 날짜로 기록을 찾았으나 실제로는 더 구체적인 식별자가 필요할 수 있습니다.
+        const recordToDelete = records.find(record => moment(record.recordDate).isSame(selectedDate, 'day'));
+
+        if (recordToDelete) {
+            axios.delete(`/api/record/${recordToDelete.id}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        // 삭제가 성공하면, records 상태를 업데이트합니다.
+                        setRecords(records.filter(record => record.id !== recordToDelete.id));
+                        alert("기록이 삭제되었습니다");
+                    } else {
+                        console.error("삭제 실패!");
+                        alert("기록 삭제에 실패했습니다");
+                    }
+                })
+                .catch(error => {
+                    console.error("삭제 요청 중 에러 발생:", error);
+                    alert("기록 삭제 요청 중 에러 발생");
+                });
+        } else {
+            alert("삭제할 기록이 없습니다.");
+            console.log("삭제할 기록이 없습니다.");
+        }
+    };
     const isSmokeFreeDay = () => {
         return getRecordsForSelectedDate().length === 0; // 담배 달력에 기록이 없는 경우
     };
@@ -225,7 +251,12 @@ function RecordPage() {
                                                         </Button>
                                                     </Col>
                                                     <Col>
-                                                        <Button className="btn btn-danger btn-lg" type="button" style={{ width: "100px" }}>
+                                                        <Button
+                                                            className="btn btn-danger btn-lg"
+                                                            type="button"
+                                                            style={{ width: "100px" }}
+                                                            onClick={handleDelete}
+                                                        >
                                                             삭제
                                                         </Button>
                                                     </Col>
