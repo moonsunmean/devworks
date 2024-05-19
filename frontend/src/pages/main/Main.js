@@ -10,13 +10,19 @@ function MainPage() {
             <div className="bg-black" style={{height: "500px"}}>
                 <section className="container">
                     <div className="row py-lg-5">
-                        <div className="col-lg-8 py-5 mx-auto">
+                        <div className="col-lg-6 py-5 mx-auto">
                             <h1 className="fw-light text-white">Nomoke</h1>
                             <h2 className="fw-light text-white">간편한 흡연 기록 서비스</h2>
                             <br/>
                             <p className="lead text-white">하루 흡연량을 간편하게 기록해서 흡연 습관을 개선해 보세요</p>
                             <p className="lead text-white">평균 흡연량을 한눈에 볼 수 있고 주간 분석 서비스를 경험해 보세요</p>
                             <p className="lead text-white">챌린지를 통해 금연에 대한 동기부여를 받아보세요</p>
+                        </div>
+                        <div className="col-lg-4 py-5">
+                            <img
+                                src="https://firebasestorage.googleapis.com/v0/b/nomo-62b92.appspot.com/o/siga.png?alt=media&token=39d3ec72-e13b-49b4-a043-822363c4e0c5"
+                                alt="담배 이미지"/>
+
                         </div>
                     </div>
                 </section>

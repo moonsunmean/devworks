@@ -15,7 +15,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "challenge")
 @Getter
 @Setter
 public class Challenge {

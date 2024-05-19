@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import annotationPlugin from 'chartjs-plugin-annotation';
@@ -13,38 +13,54 @@ ChartJS.register(
   annotationPlugin
 );
 
-const WeeklyReportChart = ({ records }) => {
-    if (!records) {
+const WeeklyReportChart = ({ records, records2 }) => {
+    if (!records || !records2) {
         return <div>Loading...</div>;
     }
 
-    // 요일별 라벨
-    const labels = ['일', '월', '화', '수', '목', '금', '토'];
-
-    // 요일별 흡연량 데이터 추출
-    const smokeData = labels.map(label => {
-        const record = records.find(r => new Date(r.recordDate).getDay() === labels.indexOf(label));
-        return record ? record.recordAmount : 0; // 요일에 해당하는 데이터가 없다면 0으로 설정
+    const labels = ['월', '화', '수', '목', '금', '토','일'];
+   // 요일별 흡연량 데이터  인덱스 조정
+    const adjustDayIndex = (date) => {
+        const day = new Date(date).getDay(); // 일요일 = 0, 월요일 = 1, ..., 토요일 = 6
+        return day === 0 ? 6 : day - 1; // 일요일이면 6 반환, 나머지는 하루씩 미뤄서 반환
+    };
+    // 이번 주 데이터
+    const smokeDataThisWeek = labels.map((label, index) => {
+        const record = records.find(r => adjustDayIndex(r.recordDate) === index);
+        return record ? record.recordAmount : 0;
     });
 
-    // 평균 흡연량 계산
-    const average = smokeData.reduce((acc, cur) => acc + cur, 0) / smokeData.length;
+    // 저번 주 데이터
+    const smokeDataLastWeek = labels.map((label, index) => {
+        const record = records2.find(r => adjustDayIndex(r.recordDate) === index);
+        return record ? record.recordAmount : 0;
+    });
+   const average = smokeDataThisWeek.reduce((acc, cur) => acc + cur, 0) / smokeDataThisWeek.length;
 
-    // 차트 데이터 설정
     const data = {
         labels,
         datasets: [
             {
-                label: '흡연량',
-                data: smokeData,
-                backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                label: '저번 주 흡연량',
+                data: smokeDataLastWeek,
+                backgroundColor: 'rgba(120, 120, 120, 0.25)',
             },
+            {
+                label: '이번 주 흡연량',
+                data: smokeDataThisWeek,
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+            }
         ],
     };
 
     const options = {
         responsive: true,
         maintainAspectRatio: false,
+        scales: {
+            x: {
+                stacked: true,
+            },
+        },
         plugins: {
             legend: {
                 position: 'top',
@@ -59,13 +75,13 @@ const WeeklyReportChart = ({ records }) => {
                         type: 'line',
                         yMin: average,
                         yMax: average,
-                        borderColor: 'rgb(255, 99, 132)',
+                        borderColor: 'rgb(255, 255, 255, 1',
                         borderWidth: 2,
                         borderDash: [6, 6],
                         label: {
                             content: `평균 흡연량: ${average.toFixed(1)}개비`,
                             enabled: true,
-                            position: 'end'
+                            position: 'center'
                         }
                     }
                 }

@@ -20,6 +20,13 @@ configurations {
 repositories {
 	mavenCentral()
 }
+sourceSets {
+	main {
+		resources {
+			srcDirs = ['src/main/resources']
+		}
+	}
+}
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
@@ -37,11 +44,13 @@ dependencies {
 	implementation 'jakarta.validation:jakarta.validation-api:3.0.0'
 
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	implementation 'com.opencsv:opencsv:5.7.1'
 
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
 	implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
 	implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+
 }
 
 tasks.named('test') {

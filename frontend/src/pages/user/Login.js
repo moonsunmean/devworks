@@ -59,7 +59,7 @@ function LoginForm() {
 
     return (
     <div>
-        <Container className="text-white" style={{margin: "130px", padding: "50px", width: "600px", borderRadius: "10px", background: "black"}}>
+        <Container className="text-white" style={{margin: "130px auto 130px auto", padding: "50px", width: "600px", borderRadius: "10px", background: "black"}}>
             {error && <div>{error}</div>}
             <Form onSubmit={handleLogin}>
                 <h2 className="text-center my-5">로그인</h2>

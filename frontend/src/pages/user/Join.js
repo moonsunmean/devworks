@@ -104,7 +104,7 @@ function JoinForm() {
 
     return (
         <div>
-            <Container className="text-white" style={{margin: "130px", padding: "50px", width: "600px", borderRadius: "10px", background: "black"}}>
+            <Container className="text-white" style={{margin: "130px auto 130px auto", padding: "50px", width: "600px", borderRadius: "10px", background: "black"}}>
                 <Form onSubmit={handleSubmit}>
                     <h2 className="text-center my-5">회원가입</h2>
                     <div className="mb-3">

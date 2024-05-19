@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import Nicotine from "./Nicotine";
-
+import MapContent from "../../components/MapContent";
 function Info() {
     return (
         <div className="bg-black" style={{height: "600px"}}>
@@ -28,6 +28,7 @@ function Center() {
                                     style={{width: "400px", height: "60px", fontSize: "30px"}}>
                                 주변 금연 센터 정보
                             </button>
+                            <MapContent/>
                         </div>
                     </div>
                 </div>
