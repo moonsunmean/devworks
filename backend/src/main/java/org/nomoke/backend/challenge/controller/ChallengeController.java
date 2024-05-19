@@ -1,8 +1,11 @@
 package org.nomoke.backend.challenge.controller;
 
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.nomoke.backend.challenge.dto.CreateChallengeDto;
 import org.nomoke.backend.challenge.entity.Challenge;
+import org.nomoke.backend.challenge.entity.ChallengeUser;
 import org.nomoke.backend.challenge.service.ChallengeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,18 +15,34 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/api/challenge")
-@RequiredArgsConstructor
 public class ChallengeController {
 
     private final ChallengeService challengeService;
 
-//    //생성
-//    @PostMapping
-//    public ResponseEntity<Challenge> createChallenge(@Valid @RequestBody ChallengeDto challengeDto) {
-//        Challenge createdChallenge = challengeService.createChallenge(challengeDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(createdChallenge);
-//    }
-//  user만들고 나면 userId로 조회하기!!!!!!!!!!!!!!!!!!!! 짱급함
+    public ChallengeController(ChallengeService challengeService) {
+        this.challengeService = challengeService;
+    }
+
+    //생성
+    @PostMapping
+    public ResponseEntity<Challenge> createChallenge(@Valid @RequestBody CreateChallengeDto createChallengeDto) {
+        Challenge createdChallenge = challengeService.createChallenge(createChallengeDto);
+        return ResponseEntity.ok(createdChallenge);
+    }
+
+    //그룹 챌린지 참가자 수
+    @GetMapping("/participants/count/{challengeId}")
+    public ResponseEntity<Long> getParticipantCount(@PathVariable("challengeId") Long challengeId) {
+        long count = challengeService.getParticipantCount(challengeId);
+        return ResponseEntity.ok(count);
+    }
+
+    //가입
+    @PostMapping("/join/{challengeId}")
+    public ResponseEntity<ChallengeUser> joinChallenge(@PathVariable("challengeId") Long challengeId, @RequestParam("userId") Long userId) {
+        ChallengeUser challengeUser = challengeService.joinChallenge(challengeId, userId);
+        return ResponseEntity.ok(challengeUser);
+    }
 
     //전체조회
     @GetMapping
@@ -32,10 +51,31 @@ public class ChallengeController {
         return ResponseEntity.ok(challenges);
     }
 
+    //내가 만든 챌린지 조회
+    @GetMapping("/creator/{userId}")
+    public ResponseEntity<List<Challenge>> getMyCreatorChallenges(@PathVariable("userId") Long userId){
+        List<Challenge> challenge = challengeService.getMyCreatorChallenges(userId);
+        return ResponseEntity.ok(challenge);
+    }
+
+    //내 챌린지 조회
+    @GetMapping("/my/{userId}")
+    public ResponseEntity<List<Challenge>> getMyChallenge(@PathVariable("userId") Long userId){
+        List<Challenge> challenge = challengeService.getMyChallenges(userId);
+        return ResponseEntity.ok(challenge);
+    }
+
+    //챌린지 관리 페이지에서 내 챌린지 조회(종료 포함)
+    @GetMapping("/my-all/{userId}")
+    public ResponseEntity<List<Challenge>> getMyAllChallenge(@PathVariable("userId") Long userId){
+        List<Challenge> challenge = challengeService.getMyAllChallenges(userId);
+        return ResponseEntity.ok(challenge);
+    }
+
     //특정 챌린지 조회
-    @GetMapping("/{id}")
-    public ResponseEntity<Challenge> getChallengeById(@PathVariable Long id){
-        Challenge challenge = challengeService.getChallengeById(id)
+    @GetMapping("/{challengeId}")
+    public ResponseEntity<Challenge> getChallengeById(@PathVariable("challengeId") Long challengeId){
+        Challenge challenge = challengeService.getChallengeById(challengeId)
                 .orElseThrow(() -> new NoSuchElementException("챌린지를 찾을 수 없습니다."));
         return ResponseEntity.ok(challenge);
     }
@@ -55,16 +95,16 @@ public class ChallengeController {
     }
 
 //    //수정
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Challenge> updateChallenge(@PathVariable Long id, @Valid @RequestBody ChallengeDto challengeDto) {
+//    @PutMapping("/{challengeId}")
+//    public ResponseEntity<Challenge> updateChallenge(@PathVariable Long challengeId, @Valid @RequestBody ChallengeDto challengeDto) {
 //        Challenge updatedChallenge = challengeService.updateChallenge(id, challengeDto);
 //        return ResponseEntity.ok(updatedChallenge);
 //    }
 
     //삭제
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteChallenge(@PathVariable Long id){
-        challengeService.deleteChallenge(id);
+    @DeleteMapping("/{challengeId}")
+    public ResponseEntity<Void> deleteChallenge(@PathVariable Long challengeId){
+        challengeService.deleteChallenge(challengeId);
         return ResponseEntity.noContent().build();
     }
 }

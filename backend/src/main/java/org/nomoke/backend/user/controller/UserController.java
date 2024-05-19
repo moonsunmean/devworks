@@ -1,6 +1,7 @@
 package org.nomoke.backend.user.controller;
 
 import org.nomoke.backend.user.dto.UserDto;
+import org.nomoke.backend.user.entity.User;
 import org.nomoke.backend.user.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +18,9 @@ public class UserController {
 
     //회원정보조회
     @GetMapping("/{userId}")
-    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") Long userId) {
-        UserDto userDto = userService.getUserById(userId);
-        return ResponseEntity.ok(userDto);
+    public ResponseEntity<User> getUserById(@PathVariable("userId") Long userId) {
+        User user = userService.getUserById(userId);
+        return ResponseEntity.ok(user);
     }
 
     //회원정보수정

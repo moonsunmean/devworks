@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import ChallengeCategory from '../../components/challenge/ChallengeCategory.js';
-import '../../styles/challenge/css/OngoingChallenge.css';
-import JoinChallengeCard from '../../components/challenge/JoinChallengeCard.js';
+import '../../styles/challenge/css/FinishedChallenge.css';
+import ChallengeCard from '../../components/challenge/ChallengeCard.js';
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 
-function OngoingChallenge() {
+function FinishedChallenge() {
     const [challengeData, setChallengeData] = useState([]);
 
     useEffect(() => {
         async function fetchChallengeData(){
             try{
-                const response = await axios.get('/api/challenge/ongoing');
+                const response = await axios.get('/api/challenge/finished');
                 setChallengeData(response.data);
                 console.log('challengeData:', response.data);
             } catch (error){
@@ -25,11 +25,11 @@ function OngoingChallenge() {
     return(
         <>
             <Header/>
-                <div className="ongoing-challenge-container">
+                <div className="finished-challenge-container">
                     <ChallengeCategory />
-                    <div className="ongoing-challenge-list">
+                    <div className="finished-challenge-list">
                         {challengeData.map(challenge => (
-                            <JoinChallengeCard key={challenge.id} challengeData={challenge} />
+                            <ChallengeCard key={challenge.id} challengeData={challenge} />
                         ))}
                     </div>
                 </div>
@@ -38,4 +38,4 @@ function OngoingChallenge() {
     )
 }
 
-export default OngoingChallenge;
+export default FinishedChallenge;

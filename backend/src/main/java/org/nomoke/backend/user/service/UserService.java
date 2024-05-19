@@ -25,10 +25,9 @@ public class UserService {
 
     //회원 정보 조회
     @Transactional(readOnly = true)
-    public UserDto getUserById(Long userId) {
-        User user = userRepository.findById(userId)
+    public User getUserById(Long userId) {
+        return userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalArgumentException("User not found with ID: " + userId));
-        return userMapper.toDto(user);
     }
 
     //회원 정보 수정

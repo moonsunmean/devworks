@@ -7,8 +7,12 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.nomoke.backend.challenge.constant.ChallengeStatus;
 import org.nomoke.backend.challenge.constant.ChallengeType;
 import org.nomoke.backend.challenge.constant.RecordType;
+import org.nomoke.backend.user.entity.User;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "challenge")
@@ -28,7 +32,7 @@ public class Challenge {
     private String text;
 
     @Column(nullable = false)
-    private LocalDateTime deadline;
+    private LocalDate deadline;
 
     @CreationTimestamp
     @Column(name = "created_date", nullable = false, updatable = false)
@@ -51,11 +55,8 @@ public class Challenge {
     @Column(name = "main_image_url", length = 1000)
     private String mainImageUrl;
 
-//    @ManyToMany
-//    @JoinTable(
-//            name = "challenge_user",
-//            joinColumns = @JoinColumn(name = "challenge_id"),
-//            inverseJoinColumns = @JoinColumn(name = "user_id")
-//    )
-//    private Set<User> users = new HashSet<>();
+    @Column(name = "max_participants")
+    private Integer maxParticipants; // 최대 참가자 수
+
+
 }

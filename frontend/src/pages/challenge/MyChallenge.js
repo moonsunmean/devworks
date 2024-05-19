@@ -1,18 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import ChallengeCard from '../../components/challenge/ChallengeCard.js';
 import ChallengeCategory from '../../components/challenge/ChallengeCategory.js';
-import '../../styles/challenge/css/OngoingChallenge.css';
-import JoinChallengeCard from '../../components/challenge/JoinChallengeCard.js';
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import { UserContext } from '../../components/UserContext';
 
-function OngoingChallenge() {
+function MyChallenge() {
+    const { userId } = useContext(UserContext);
     const [challengeData, setChallengeData] = useState([]);
 
     useEffect(() => {
         async function fetchChallengeData(){
+            if (!userId) return;
             try{
-                const response = await axios.get('/api/challenge/ongoing');
+                console.log('userId:', userId);
+                const response = await axios.get(`/api/challenge/my/${userId}`);
                 setChallengeData(response.data);
                 console.log('challengeData:', response.data);
             } catch (error){
@@ -20,22 +23,19 @@ function OngoingChallenge() {
             }
         }
         fetchChallengeData();
-    }, []);
+    }, [userId]);
+
 
     return(
         <>
             <Header/>
-                <div className="ongoing-challenge-container">
                     <ChallengeCategory />
-                    <div className="ongoing-challenge-list">
                         {challengeData.map(challenge => (
-                            <JoinChallengeCard key={challenge.id} challengeData={challenge} />
+                            <ChallengeCard key={challenge.id} challengeData={challenge} />
                         ))}
-                    </div>
-                </div>
             <Footer/>
         </>
     )
 }
 
-export default OngoingChallenge;
+export default MyChallenge;
