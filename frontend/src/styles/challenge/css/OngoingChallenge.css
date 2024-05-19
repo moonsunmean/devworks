@@ -1,0 +1,7 @@
+.ongoing-challenge-container{
+    display: flex;
+}
+
+.ongoing-challenge-list{
+    padding: 50px;
+}

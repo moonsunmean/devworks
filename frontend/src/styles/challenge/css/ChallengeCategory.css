@@ -1,0 +1,79 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.challenge-category-container.open{
+    display: flex;
+    height: 100vh;
+    width: 20vw;
+}
+
+.challenge-category-container.closed{
+    display: flex;
+    height: 100vh;
+    width: 3vw;
+}
+
+.challenge-category.open {
+    top: 0;
+    left: 0;
+    width: 90%; /* 카테고리는 컨테이너 넓이의 90% */
+    background-color: #212121;
+    color: white;
+    padding: 20px;
+    transition: width 0.5s ease; /* 카테고리 영역이 사라질 때 애니메이션 적용 */
+}
+
+.challenge-category.closed{
+    width: 0;
+    height: 100%;
+    padding: 0;
+    transition: width 0.5s ease;
+}
+
+.challenge-category-btn{
+    top: 50%;
+    padding: 10px;
+    width: 10%; /* 버튼은 컨테이너 넓이의 10% */
+    height: 100%;
+    background-color: #212121;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.categories{
+    margin-top: 40px;
+}
+
+.parent-category{
+    margin-bottom: 30px;
+    font-size: 19px;
+    list-style-type: none;
+    cursor: pointer;
+}
+
+.parent-category:hover{
+    color: #FF0000;
+    font-size: 125%;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7);
+    transition: font-size 0.3s, font-weight 0.3s;
+}
+
+.sub-category{
+    margin-top: 12px;
+    font-size: 16px;
+    list-style-type: none;
+    cursor: pointer;
+    color: white;
+}
+
+.sub-category:hover{
+    color: #FF0000;
+    font-size: 90%;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.7);
+    transition: font-size 0.3s, font-weight 0.3s;
+}
+

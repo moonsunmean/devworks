@@ -1,16 +1,18 @@
 package org.nomoke.backend.user.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
-//import org.nomoke.backend.challenge.entity.Challenge;
-import org.nomoke.backend.record.entity.RecordEntity;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDate;
+
 
 @Entity
-@Table(name = "user")
 @Getter
 @Setter
 public class User {
@@ -19,13 +21,15 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 10, nullable = false)
+    private String username;
+    private String password;
+    private String role;
     private String name;
+    private String gender;
+    private String email;
+    private LocalDate birthDate;
 
-    @Column(name = "login_id", length = 10, nullable = false)
-    private String loginId;
-
-//    @ManyToMany(mappedBy = "users")
-//    private Set<Challenge> challenge = new HashSet<>();
+    @CreationTimestamp
+    private LocalDate createdAt;
 
 }

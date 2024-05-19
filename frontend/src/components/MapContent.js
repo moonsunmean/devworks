@@ -133,9 +133,11 @@ function MapContent() {
       }}
     ></div>
     <br />
-    <div><strong>주소 : </strong> {realAddress} {positionName}</div>
-    <div><strong>전화번호 :</strong> {phone} </div>
-    <div><strong>상담원 수 :</strong> {counselor} </div>
+    <div style ={{ color:"white"}}>
+      <div><strong>주소 : </strong> {realAddress} {positionName}</div>
+      <div><strong>전화번호 :</strong> {phone} </div>
+      <div><strong>상담원 수 :</strong> {counselor} </div>
+    </div>
     </>
   );
 }
